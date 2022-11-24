@@ -1,0 +1,100 @@
+﻿@page
+@model PharmacyApp.Pages.Managers.CreateModel
+
+@{
+    ViewData["Title"] = "Створити";
+}
+
+<h1>Створити</h1>
+
+<h4>Менеджер</h4>
+<hr />
+<form enctype="multipart/form-data" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Manager.LastName" class="control-label"></label>
+                <input asp-for="Manager.LastName" class="form-control" />
+                <span asp-validation-for="Manager.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manager.FirstName" class="control-label"></label>
+                <input asp-for="Manager.FirstName" class="form-control" />
+                <span asp-validation-for="Manager.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manager.Patronymic" class="control-label"></label>
+                <input asp-for="Manager.Patronymic" class="form-control" />
+                <span asp-validation-for="Manager.Patronymic" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Manager.Pharmacy" class="control-label"></label>
+                <select asp-for="Manager.PharmacyId" class="form-control" asp-items="Model.PharmaciesSelectList"><option value="">--Немає--</option></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manager.Photo" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="FormFile" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Оберіть зображення</label>
+                </div>
+                <span asp-validation-for="FormFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Створити" class="btn btn-primary" />
+            </div>
+            <div>
+                <a asp-page="./Index"
+                   asp-route-pageIndex="@Model.PageIndex"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Назад до списку
+                </a>
+            </div>
+        </div>
+        <div id="photo">
+            @if (!string.IsNullOrEmpty(@Model.Manager.Photo))
+            {
+                <div class="col-md-4">
+                    <div class="img-fluid mw-100 h-auto">
+                        <img id="upload" class="img-responsive" src="~/img/people/@Model.Manager.Photo" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        @* Display the filename of the selected photo *@
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+        @* Display image of the selected photo *@
+            $("#customFile").change(function (e) {
+
+                for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+
+                    var file = e.originalEvent.srcElement.files[i];
+
+                    var img = document.createElement("img");
+                    img.setAttribute("id", "upload");
+                    img.setAttribute("class", "img-responsive");
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        img.src = reader.result;
+                    }
+                    reader.readAsDataURL(file);
+                    $('#upload').remove();
+                    $("#photo").after(img);
+                }
+            });
+    </script>
+}

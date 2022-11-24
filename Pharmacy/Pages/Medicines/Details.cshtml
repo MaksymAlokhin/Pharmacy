@@ -1,0 +1,56 @@
+﻿@page
+@model PharmacyApp.Pages.Medicines.DetailsModel
+
+@{
+    ViewData["Title"] = "Деталі";
+}
+
+<h1>Деталі</h1>
+
+<div>
+    <h4>@Model.Medicine.Name</h4>
+    <hr />
+    <div class="row">
+        <div id="photo">
+            @if (!string.IsNullOrEmpty(@Model.Medicine.BoxArt))
+            {
+                <div class="col-md-4">
+                    <div class="img-fluid mw-100 h-auto">
+                        <img id="upload" class="img-responsive" src="~/img/medicine/@Model.Medicine.BoxArt" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Medicine.Name)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Medicine.Name)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Medicine.Price)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Medicine.Price)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-page="./Edit"
+       asp-route-id="@Model.Medicine?.Id"
+       asp-route-pageIndex="@Model.PageIndex"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-currentFilter="@Model.CurrentFilter">
+        Редагувати
+    </a> |
+    <a asp-page="./Index"
+       asp-route-pageIndex="@Model.PageIndex"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-currentFilter="@Model.CurrentFilter">
+        Назад до списку
+    </a>
+</div>

@@ -1,0 +1,115 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.manager-col-1 {
+    width: 4%;
+}
+
+.manager-col-2 {
+    width: 7.4%;
+}
+
+.manager-col-3 {
+    width: 13.2%;
+}
+
+.manager-col-4 {
+    width: 12.2%;
+}
+
+.manager-col-5 {
+    width: 15.6%;
+}
+
+.manager-col-6 {
+    width: 34.3%;
+}
+
+.manager-col-7 {
+    width: 13.3%;
+}
+
+.medicine-col-1 {
+    width: 5.4%;
+}
+
+.medicine-col-2 {
+    width: 7.8%;
+}
+
+.medicine-col-3 {
+    width: 63.3%;
+}
+
+.medicine-col-4 {
+    width: 9%;
+}
+
+.medicine-col-5 {
+    width: 14.5%;
+}
+
+.pharmacy-col-1 {
+    width: 4.8%;
+}
+
+.pharmacy-col-2 {
+    width: 33.2%;
+}
+
+.pharmacy-col-3 {
+    width: 17.2%;
+}
+
+.pharmacy-col-4 {
+    width: 31.9%;
+}
+
+.pharmacy-col-5 {
+    width: 12.9%;
+}
+
+
+.availability-col-1 {
+    width: 5%;
+}
+
+.availability-col-2 {
+    width: 46%;
+}
+
+.availability-col-3 {
+    width: 6%;
+}
+
+.availability-col-4 {
+    width: 31%;
+}
+
+.availability-col-5 {
+    width: 12%;
+}
+
+.table td {
+    word-break: break-all;
+}
+
+.center-text {
+    text-align: center;
+}

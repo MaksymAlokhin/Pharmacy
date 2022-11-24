@@ -1,0 +1,42 @@
+﻿@page
+@model PharmacyApp.Pages.PharmacyMedicines.CreateModel
+
+@{
+    ViewData["Title"] = "Створити";
+}
+
+<h1>Створити</h1>
+
+<h4>Наявність</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PharmacyMedicine.Medicine" class="control-label"></label>
+                <select asp-for="PharmacyMedicine.MedicineId" class="form-control" asp-items="ViewBag.MedicineId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PharmacyMedicine.Quantity" class="control-label"></label>
+                <input asp-for="PharmacyMedicine.Quantity" class="form-control" />
+                <span asp-validation-for="PharmacyMedicine.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PharmacyMedicine.Pharmacy" class="control-label"></label>
+                <select asp-for="PharmacyMedicine.PharmacyId" class ="form-control" asp-items="ViewBag.PharmacyId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Створити" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Назад до списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

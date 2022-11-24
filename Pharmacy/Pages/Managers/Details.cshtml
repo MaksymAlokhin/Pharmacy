@@ -1,0 +1,70 @@
+﻿@page
+@model PharmacyApp.Pages.Managers.DetailsModel
+
+@{
+    ViewData["Title"] = "Деталі";
+}
+
+<h1>Деталі</h1>
+
+<div>
+    <h4>@Model.Manager.FullName</h4>
+    <hr />
+    <div class="row">
+        <div id="photo">
+            @if (!string.IsNullOrEmpty(@Model.Manager.Photo))
+            {
+                <div class="col-md-4">
+                    <div class="img-fluid mw-100 h-auto">
+                        <img id="upload" class="img-responsive" src="~/img/people/@Model.Manager.Photo" />
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.LastName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Manager.LastName)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.FirstName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Manager.FirstName)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.Patronymic)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Manager.Patronymic)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.Pharmacy)
+                </dt>
+                <dd class="col-sm-9">
+                    <a asp-page="../Pharmacies/Details"
+                       asp-route-id="@Model.Manager.PharmacyId">
+                        @Html.DisplayFor(model => model.Manager.Pharmacy.Name)
+                    </a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Manager?.Id"
+       asp-route-pageIndex="@Model.PageIndex"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-currentFilter="@Model.CurrentFilter">
+        Редагувати
+    </a> |
+    <a asp-page="./Index"
+       asp-route-pageIndex="@Model.PageIndex"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-currentFilter="@Model.CurrentFilter">
+        Назад до списку
+    </a>
+</div>

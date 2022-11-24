@@ -1,0 +1,37 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  AZURE_WEBAPP_NAME: PharmacyAppDemo
+  WORKING_DIRECTORY: .
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: Pharmacy
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: Pharmacy
+    #- name: Publish
+    #  run: dotnet publish Pharmacy/PharmacyApp.csproj -c Release -o website
+    #- name: 'Deploy to Azure WebApp'
+    #  uses: azure/webapps-deploy@v2
+    #  with:
+    #    app-name: ${{ env.AZURE_WEBAPP_NAME }}
+    #    publish-profile: ${{ secrets.PHARMACY_SECRET }}
+    #    package: '${{ env.WORKING_DIRECTORY }}/website'

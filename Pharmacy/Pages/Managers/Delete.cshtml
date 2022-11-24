@@ -1,0 +1,64 @@
+﻿@page
+@model PharmacyApp.Pages.Managers.DeleteModel
+
+@{
+    ViewData["Title"] = "Видалити";
+}
+
+<h1>Видалити</h1>
+
+<h3>Ви впевнені, що хочете видалити?</h3>
+<div>
+    <h4>@Model.Manager.FullName</h4>
+    <hr />
+    <div class="row">
+        @if (!string.IsNullOrEmpty(@Model.Manager.Photo))
+        {
+            <div class="col-md-4">
+                <div class="img-fluid mw-100 h-auto">
+                    <img src="~/img/people/@Model.Manager.Photo" />
+                </div>
+            </div>
+        }
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.LastName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Manager.LastName)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.FirstName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Manager.FirstName)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.Patronymic)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Manager.Patronymic)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Manager.Pharmacy)
+                </dt>
+                <dd class="col-sm-9">
+                    <a asp-page="../Pharmacies/Details"
+                       asp-route-id="@Model.Manager.PharmacyId">
+                        @Html.DisplayFor(model => model.Manager.Pharmacy.Name)
+                    </a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <form method="post">
+        <input type="hidden" asp-for="Manager.Id" />
+        <input type="submit" value="Видалити" class="btn btn-danger" /> |
+        <a asp-page="./Index"
+           asp-route-pageIndex="@Model.PageIndex"
+           asp-route-sortOrder="@Model.CurrentSort"
+           asp-route-currentFilter="@Model.CurrentFilter">Назад до списку</a>
+    </form>
+</div>

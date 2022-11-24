@@ -1,0 +1,154 @@
+﻿@page
+@model PharmacyApp.Pages.Managers.IndexModel
+
+@{
+    ViewData["Title"] = "Персонал";
+}
+
+<h1>Персонал</h1>
+
+<div class="row">
+    <div class="col-sm-auto">
+        <form asp-page="./Index" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    <a asp-page="Create"
+                       asp-route-sortOrder="@Model.CurrentSort"
+                       asp-route-pageIndex="@Model.Manager.PageIndex"
+                       asp-route-currentFilter="@Model.CurrentFilter"
+                       title="Створити">
+                        <i class="fas fa-plus-circle fa-lg mr-1"></i>
+                    </a>
+                    <input type="text" name="SearchString" value="@Model.CurrentFilter" placeholder="Пошук" />
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-search"></i>
+                    </button> |
+                    <a asp-page="./Index" class="btn btn-default"><i class="fas fa-times"></i></a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="manager-col-1">#</th>
+            <th class="manager-col-2">Фото</th>
+            <th class="manager-col-3">
+                <a asp-page="./Index"
+                   asp-route-sortOrder="@Model.LastNameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Manager[0].LastName)
+                </a>
+            </th>
+            <th class="manager-col-4">
+                @Html.DisplayNameFor(model => model.Manager[0].FirstName)
+            </th>
+            <th class="manager-col-5">
+                @Html.DisplayNameFor(model => model.Manager[0].Patronymic)
+            </th>
+            <th class="manager-col-6">
+                <a asp-page="./Index"
+                   asp-route-sortOrder="@Model.PharmacySort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Manager[0].Pharmacy)
+                </a>
+            </th>
+            <th class="manager-col-7"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            @foreach (var item in Model.Manager)
+            {
+                <tr>
+                    <th scope="row">
+                        @Model.Manager.SeqNum[i]
+                    </th>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Photo))
+                        {
+                            <img src="~/img/people/@item.Photo"
+                     class="rounded-circle"
+                     height="40" width:auto
+                     asp-append-version="true" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patronymic)
+                    </td>
+                    <td>
+                        <a asp-page="../Pharmacies/Details"
+                   asp-route-id="@item.PharmacyId">
+                            @Html.DisplayFor(modelItem => item.Pharmacy.Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-page="./Edit"
+                   asp-route-id="@item.Id"
+                   asp-route-pageIndex="@Model.Manager.PageIndex"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                            <i class="fas fa-pencil-alt fa-lg"></i>
+                        </a> |
+                        <a asp-page="./Details"
+                   asp-route-id="@item.Id"
+                   asp-route-pageIndex="@Model.Manager.PageIndex"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                            <i class="fas fa-eye fa-lg"></i>
+                        </a> |
+                        <a asp-page="./Delete"
+                   asp-route-id="@item.Id"
+                   asp-route-pageIndex="@Model.Manager.PageIndex"
+                   asp-route-sortOrder="@Model.CurrentSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                            <i class="fas fa-trash fa-lg text-danger"></i>
+                        </a>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.Manager.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Manager.HasNextPage ? "disabled" : "";
+}
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="1"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    <i class="fas fa-fast-backward"></i>
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Manager.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    <i class="fas fa-arrow-alt-circle-left fa-lg"></i>
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Manager.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    <i class="fas fa-arrow-alt-circle-right fa-lg"></i>
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Manager.TotalPages)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    <i class="fas fa-fast-forward"></i>
+</a>
