@@ -1,0 +1,43 @@
+﻿@page
+@model PharmacyApp.Pages.Managers.DetailsModel
+
+@{
+    ViewData["Title"] = "Деталі";
+}
+
+<h1>Деталі</h1>
+
+<div>
+    <h4>Менеджер</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Manager.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Manager.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Manager.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Manager.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Manager.Patronymic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Manager.Patronymic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Manager.Pharmacy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Manager.Pharmacy.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Manager?.Id">Edit</a> |
+    <a asp-page="./Index">Назад до списку</a>
+</div>
