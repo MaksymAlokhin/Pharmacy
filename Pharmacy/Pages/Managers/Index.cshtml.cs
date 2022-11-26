@@ -23,10 +23,10 @@ namespace PharmacyApp.Pages.Managers
 
         public async Task OnGetAsync()
         {
-            if (_context.Manager != null)
+            if (_context.Managers != null)
             {
-                Manager = await _context.Manager
-                .Include(m => m.Pharmacy).ToListAsync();
+                Manager = await _context.Managers
+                .Include(m => m.Pharmacy).OrderBy(m => m.LastName).ToListAsync();
             }
         }
     }

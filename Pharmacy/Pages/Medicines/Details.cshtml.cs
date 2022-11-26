@@ -23,12 +23,12 @@ namespace PharmacyApp.Pages.Medicines
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Medicine == null)
+            if (id == null || _context.Medicines == null)
             {
                 return NotFound();
             }
 
-            var medicine = await _context.Medicine.FirstOrDefaultAsync(m => m.Id == id);
+            var medicine = await _context.Medicines.FirstOrDefaultAsync(m => m.Id == id);
             if (medicine == null)
             {
                 return NotFound();

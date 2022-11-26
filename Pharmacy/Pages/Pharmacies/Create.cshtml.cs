@@ -36,7 +36,7 @@ namespace PharmacyApp.Pages.Pharmacies
                 return Page();
             }
 
-            _context.Pharmacy.Add(Pharmacy);
+            _context.Pharmacies.Add(Pharmacy);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

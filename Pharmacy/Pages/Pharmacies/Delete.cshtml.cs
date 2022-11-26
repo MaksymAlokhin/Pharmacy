@@ -24,12 +24,12 @@ namespace PharmacyApp.Pages.Pharmacies
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Pharmacy == null)
+            if (id == null || _context.Pharmacies == null)
             {
                 return NotFound();
             }
 
-            var pharmacy = await _context.Pharmacy.FirstOrDefaultAsync(m => m.Id == id);
+            var pharmacy = await _context.Pharmacies.FirstOrDefaultAsync(m => m.Id == id);
 
             if (pharmacy == null)
             {
@@ -44,16 +44,16 @@ namespace PharmacyApp.Pages.Pharmacies
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Pharmacy == null)
+            if (id == null || _context.Pharmacies == null)
             {
                 return NotFound();
             }
-            var pharmacy = await _context.Pharmacy.FindAsync(id);
+            var pharmacy = await _context.Pharmacies.FindAsync(id);
 
             if (pharmacy != null)
             {
                 Pharmacy = pharmacy;
-                _context.Pharmacy.Remove(Pharmacy);
+                _context.Pharmacies.Remove(Pharmacy);
                 await _context.SaveChangesAsync();
             }
 

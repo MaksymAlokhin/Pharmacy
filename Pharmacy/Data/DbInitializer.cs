@@ -16,7 +16,7 @@
             {
                 context.AddRange(SeedPharmacies.data);
             }
-            if (!context.Managers.Any())
+            if (!context.PharmacyMedicine.Any())
             {
                 context.AddRange(SeedPharmacyMedicine.data);
             }

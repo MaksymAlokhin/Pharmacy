@@ -9,6 +9,8 @@ namespace PharmacyApp.Models
         public string Name { get; set; }
         [DisplayName("Ціна")]
         public decimal Price { get; set; }
+        [DisplayName("Зображеня")]
+        public string BoxArt { get; set; }
         public ICollection<PharmacyMedicine> PharmacyMedicine { get; set; }
     }
 }

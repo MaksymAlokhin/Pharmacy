@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace PharmacyApp.Pages.Medicines
     public class DeleteModel : PageModel
     {
         private readonly PharmacyApp.Data.PharmacyContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public DeleteModel(PharmacyApp.Data.PharmacyContext context)
+        public DeleteModel(PharmacyApp.Data.PharmacyContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [BindProperty]
@@ -24,12 +27,12 @@ namespace PharmacyApp.Pages.Medicines
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Medicine == null)
+            if (id == null || _context.Medicines == null)
             {
                 return NotFound();
             }
 
-            var medicine = await _context.Medicine.FirstOrDefaultAsync(m => m.Id == id);
+            var medicine = await _context.Medicines.FirstOrDefaultAsync(m => m.Id == id);
 
             if (medicine == null)
             {
@@ -44,16 +47,34 @@ namespace PharmacyApp.Pages.Medicines
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Medicine == null)
+            if (id == null || _context.Medicines == null)
             {
                 return NotFound();
             }
-            var medicine = await _context.Medicine.FindAsync(id);
+            var medicine = await _context.Medicines.FindAsync(id);
 
             if (medicine != null)
             {
                 Medicine = medicine;
-                _context.Medicine.Remove(Medicine);
+                //Delete photo file
+                bool isProduction = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production";
+                if (isProduction)
+                {
+                    if (webHostEnvironment != null)
+                    {
+                        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, @"img/medicine"); //webHost adds 'wwwroot'
+                        var oldFile = Medicine.BoxArt;
+                        var fileToDelete = string.Empty;
+                        if (!string.IsNullOrEmpty(oldFile))
+                        {
+                            fileToDelete = Path.Combine(uploadsFolder, oldFile);
+                        }
+                        //Delete photo file
+                        if (System.IO.File.Exists(fileToDelete))
+                            System.IO.File.Delete(fileToDelete);
+                    }
+                }
+                _context.Medicines.Remove(Medicine);
                 await _context.SaveChangesAsync();
             }
 

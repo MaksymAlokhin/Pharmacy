@@ -12,7 +12,8 @@ namespace PharmacyApp.Models
         [DisplayName("По батькові")]
         public string Patronymic { get; set; }
         public string FullName => $"{FirstName} {LastName} {Patronymic}";
-        public int PharmacyId { get; set; }
+        public string Photo { get; set; }
+        public int? PharmacyId { get; set; }
         [DisplayName("Місце роботи")]
         public Pharmacy Pharmacy { get; set; }
     }

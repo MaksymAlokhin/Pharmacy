@@ -23,12 +23,12 @@ namespace PharmacyApp.Pages.Managers
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Manager == null)
+            if (id == null || _context.Managers == null)
             {
                 return NotFound();
             }
 
-            var manager = await _context.Manager.FirstOrDefaultAsync(m => m.Id == id);
+            var manager = await _context.Managers.FirstOrDefaultAsync(m => m.Id == id);
             if (manager == null)
             {
                 return NotFound();

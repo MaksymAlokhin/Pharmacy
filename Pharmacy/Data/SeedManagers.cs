@@ -10,7 +10,7 @@ namespace PharmacyApp.Data
             LastName = "Мазурик",
             FirstName = "Шаміль",
             Patronymic = "Денисович",
-            Pharmacy = null
+            Photo = "male_001.jpg"
         };
 
         public static Manager mgr02 = new Manager
@@ -18,7 +18,7 @@ namespace PharmacyApp.Data
             LastName = "Шишацький",
             FirstName = "Юрій",
             Patronymic = "Фролович",
-            Pharmacy = null
+            Photo = "male_002.jpg"
         };
 
         public static Manager mgr03 = new Manager
@@ -26,7 +26,7 @@ namespace PharmacyApp.Data
             LastName = "Полтавець",
             FirstName = "Златодан",
             Patronymic = "Азарович",
-            Pharmacy = null
+            Photo = "male_003.jpg"
         };
 
         public static Manager mgr04 = new Manager
@@ -34,7 +34,7 @@ namespace PharmacyApp.Data
             LastName = "Андрієвич",
             FirstName = "Княжослав",
             Patronymic = "Іванович",
-            Pharmacy = null
+            Photo = "male_004.jpg"
         };
 
         public static Manager mgr05 = new Manager
@@ -42,7 +42,7 @@ namespace PharmacyApp.Data
             LastName = "Бережнюк",
             FirstName = "Іларіон",
             Patronymic = "Любомирович",
-            Pharmacy = null
+            Photo = "male_005.jpg"
         };
 
         public static Manager mgr06 = new Manager
@@ -50,7 +50,7 @@ namespace PharmacyApp.Data
             LastName = "Шкрібляк",
             FirstName = "Цецілія",
             Patronymic = "Северинівна",
-            Pharmacy = null
+            Photo = "female_001.jpg"
         };
 
         public static Manager mgr07 = new Manager
@@ -58,7 +58,7 @@ namespace PharmacyApp.Data
             LastName = "Голота",
             FirstName = "Феодосія",
             Patronymic = "Іванівна",
-            Pharmacy = null
+            Photo = "female_002.jpg"
         };
 
         public static Manager mgr08 = new Manager
@@ -66,7 +66,7 @@ namespace PharmacyApp.Data
             LastName = "Черкасенко",
             FirstName = "Зінаїда",
             Patronymic = "Захарівна",
-            Pharmacy = null
+            Photo = "female_003.jpg"
         };
 
         public static Manager mgr09 = new Manager
@@ -74,7 +74,7 @@ namespace PharmacyApp.Data
             LastName = "Дриженко",
             FirstName = "Неля",
             Patronymic = "Герасимівна",
-            Pharmacy = null
+            Photo = "female_004.jpg"
         };
 
         public static Manager mgr10 = new Manager
@@ -82,7 +82,7 @@ namespace PharmacyApp.Data
             LastName = "Малишенко",
             FirstName = "Маргарита",
             Patronymic = "Давидівна",
-            Pharmacy = null
+            Photo = "female_005.jpg"
         };
         #endregion
         public static List<Manager> data;

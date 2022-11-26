@@ -23,9 +23,9 @@ namespace PharmacyApp.Pages.Pharmacies
 
         public async Task OnGetAsync()
         {
-            if (_context.Pharmacy != null)
+            if (_context.Pharmacies != null)
             {
-                Pharmacy = await _context.Pharmacy.ToListAsync();
+                Pharmacy = await _context.Pharmacies.ToListAsync();
             }
         }
     }

@@ -23,9 +23,9 @@ namespace PharmacyApp.Pages.Medicines
 
         public async Task OnGetAsync()
         {
-            if (_context.Medicine != null)
+            if (_context.Medicines != null)
             {
-                Medicine = await _context.Medicine.ToListAsync();
+                Medicine = await _context.Medicines.OrderBy(m => m.Name).ToListAsync();
             }
         }
     }

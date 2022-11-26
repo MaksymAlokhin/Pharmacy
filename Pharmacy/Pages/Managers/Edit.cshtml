@@ -5,13 +5,26 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Редагувати</h1>
 
-<h4>Менеджер</h4>
+<h4>@Model.Manager.FullName</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form enctype="multipart/form-data" method="post">
+            <input type="hidden" asp-for="Manager.Photo" />
+            <div id="photo">
+                @if (!string.IsNullOrEmpty(@Model.Manager.Photo))
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="img-fluid mw-100 h-auto">
+                                <img id="upload" class="img-responsive" src="~/img/people/@Model.Manager.Photo" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Manager.Id" />
             <div class="form-group">
@@ -30,9 +43,12 @@
                 <span asp-validation-for="Manager.Patronymic" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Manager.PharmacyId" class="control-label"></label>
+                <label asp-for="Manager.Pharmacy" class="control-label"></label>
+                <select asp-for="Manager.PharmacyId" class="form-control" asp-items="Model.PharmaciesSelectList"><option value="">--Оберіть--</option></select>
+
+@*                <label asp-for="Manager.PharmacyId" class="control-label"></label>
                 <select asp-for="Manager.PharmacyId" class="form-control" asp-items="ViewBag.PharmacyId"></select>
-                <span asp-validation-for="Manager.PharmacyId" class="text-danger"></span>
+                <span asp-validation-for="Manager.PharmacyId" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -46,5 +62,34 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        @* Display the filename of the selected photo *@
+            //$(".custom-file-input").on("change", function () {
+            //    var fileName = $(this).val().split("\\").pop();
+            //    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            //});
+        @* Display image of the selected photo *@
+            $("#customFile").change(function (e) {
+
+                for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+
+                    var file = e.originalEvent.srcElement.files[i];
+
+                    var img = document.createElement("img");
+                    img.setAttribute("id", "upload");
+                    img.setAttribute("class", "img-responsive");
+                    var reader = new FileReader();
+                    reader.onloadend = function () {
+                        img.src = reader.result;
+                    }
+                    reader.readAsDataURL(file);
+                    $('#upload').remove();
+                    $("#photo").after(img);
+                }
+            });
+    </script>
 }
+

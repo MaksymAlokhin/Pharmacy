@@ -9,8 +9,18 @@
 
 <h3>Ви впевнені, що хочете видалити?</h3>
 <div>
-    <h4>Менеджер</h4>
+    <h4>@Model.Manager.FullName</h4>
     <hr />
+    @if (!string.IsNullOrEmpty(@Model.Manager.Photo))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <div class="img-fluid mw-100 h-auto">
+                    <img src="~/img/medicine/@Model.Manager.Photo" />
+                </div>
+            </div>
+        </div>
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Manager.FirstName)
