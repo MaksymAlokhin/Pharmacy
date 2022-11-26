@@ -51,6 +51,14 @@
                 <span asp-validation-for="Manager.PharmacyId" class="text-danger"></span>*@
             </div>
             <div class="form-group">
+                <label asp-for="Manager.Photo" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="FormFile" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Оберіть зображення</label>
+                </div>
+                <span asp-validation-for="FormFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -67,10 +75,10 @@
     }
     <script>
         @* Display the filename of the selected photo *@
-            //$(".custom-file-input").on("change", function () {
-            //    var fileName = $(this).val().split("\\").pop();
-            //    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            //});
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
         @* Display image of the selected photo *@
             $("#customFile").change(function (e) {
 

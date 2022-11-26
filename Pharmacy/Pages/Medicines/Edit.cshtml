@@ -41,7 +41,7 @@
                 <label asp-for="Medicine.BoxArt" class="control-label"></label>
                 <div class="custom-file">
                     <input asp-for="FormFile" class="custom-file-input" id="customFile">
-@*                    <label class="custom-file-label" for="customFile">Оберіть зображення</label>*@
+                    <label class="custom-file-label" for="customFile">Оберіть зображення</label>
                 </div>
                 <span asp-validation-for="FormFile" class="text-danger"></span>
             </div>
@@ -62,10 +62,10 @@
     }
     <script>
         @* Display the filename of the selected photo *@
-            //$(".custom-file-input").on("change", function () {
-            //    var fileName = $(this).val().split("\\").pop();
-            //    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            //});
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
         @* Display image of the selected photo *@
             $("#customFile").change(function (e) {
 

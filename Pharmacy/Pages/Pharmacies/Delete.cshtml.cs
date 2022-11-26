@@ -29,7 +29,10 @@ namespace PharmacyApp.Pages.Pharmacies
                 return NotFound();
             }
 
-            var pharmacy = await _context.Pharmacies.FirstOrDefaultAsync(m => m.Id == id);
+            var pharmacy = await _context.Pharmacies
+                .Include(p => p.PharmacyMedicine)
+                .ThenInclude(pm => pm.Medicine)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (pharmacy == null)
             {

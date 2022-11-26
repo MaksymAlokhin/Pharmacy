@@ -23,6 +23,38 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Pharmacy.City)
         </dd>
+        @if (Model.Pharmacy.PharmacyMedicine.Any())
+        {
+            <dd class="col-sm-auto" style="overflow-y: auto; max-height: 400px;">
+                <table class="table-striped table-bordered">
+                    <thead style="text-align: center">
+                        <tr>
+                            <th class="col-sm-auto">#</th>
+                            <th class="col-sm-auto">@Html.DisplayNameFor(model => model.Pharmacy.PharmacyMedicine.FirstOrDefault().Medicine.Name)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            @foreach (var item in Model.Pharmacy.PharmacyMedicine)
+                            {
+                                <tr>
+                                    <td style="text-align: center">@i</td>
+                                    <td>
+                                        <a asp-page="../Medicines/Details"
+                                             asp-route-id="@item.MedicineId">
+                                            @Html.DisplayFor(modelItem => item.Medicine.Name)
+                                        </a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </dd>
+        }
+
     </dl>
 </div>
 <div>
