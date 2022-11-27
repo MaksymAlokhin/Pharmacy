@@ -18,6 +18,10 @@ namespace PharmacyApp.Pages.Managers
         public IFormFile FormFile { get; set; }
         private readonly string[] permittedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".tiff" };
         private readonly IWebHostEnvironment webHostEnvironment;
+
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
         public SelectList PharmaciesSelectList { get; set; }
 
         public CreateModel(PharmacyApp.Data.PharmacyContext context, IWebHostEnvironment webHostEnvironment)
@@ -26,8 +30,12 @@ namespace PharmacyApp.Pages.Managers
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string sortOrder, string currentFilter, int? pageIndex)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             var PharmaciesQuery = _context.Pharmacies
                 .OrderBy(e => e.Name)
                 .AsNoTracking();
@@ -44,7 +52,8 @@ namespace PharmacyApp.Pages.Managers
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string sortOrder,
+            string currentFilter, int? pageIndex)
         {
             if (!ModelState.IsValid)
             {
@@ -75,10 +84,25 @@ namespace PharmacyApp.Pages.Managers
                 }
             }
 
+            Manager formerManager = await _context.Managers
+                .Where(m => m.PharmacyId == Manager.PharmacyId)
+                .FirstOrDefaultAsync();
+            if (formerManager != null)
+            {
+                formerManager.PharmacyId = null;
+                _context.Attach(formerManager).State = EntityState.Modified;
+            }
+
+
             _context.Managers.Add(Manager);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new
+            {
+                pageIndex = $"{pageIndex}",
+                sortOrder = $"{sortOrder}",
+                currentFilter = $"{currentFilter}"
+            });
         }
     }
 }

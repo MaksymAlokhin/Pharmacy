@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PharmacyApp.Models
 {
@@ -8,10 +9,12 @@ namespace PharmacyApp.Models
         [DisplayName("Ім'я")]
         public string FirstName { get; set; }
         [DisplayName("Прізвище")]
+        [Required]
         public string LastName { get; set; }
         [DisplayName("По батькові")]
         public string Patronymic { get; set; }
-        public string FullName => $"{FirstName} {LastName} {Patronymic}";
+        public string FullName => $"{LastName} {FirstName} {Patronymic}";
+        public string ShortName => $"{LastName} {FirstName.Substring(0, 1)}.{Patronymic.Substring(0, 1)}.";
         [DisplayName("Фото")]
         public string Photo { get; set; }
         public int? PharmacyId { get; set; }

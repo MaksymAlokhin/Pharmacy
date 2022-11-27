@@ -18,14 +18,22 @@ namespace PharmacyApp.Pages.Medicines
         private readonly string[] permittedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".tiff" };
         private readonly IWebHostEnvironment webHostEnvironment;
 
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+
         public CreateModel(PharmacyApp.Data.PharmacyContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string sortOrder, string currentFilter, int? pageIndex)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             Medicine = new Medicine();
             return Page();
         }
@@ -35,7 +43,8 @@ namespace PharmacyApp.Pages.Medicines
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string sortOrder,
+            string currentFilter, int? pageIndex)
         {
           if (!ModelState.IsValid)
             {
@@ -70,7 +79,12 @@ namespace PharmacyApp.Pages.Medicines
             _context.Medicines.Add(Medicine);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new
+            {
+                pageIndex = $"{pageIndex}",
+                sortOrder = $"{sortOrder}",
+                currentFilter = $"{currentFilter}"
+            });
         }
     }
 }

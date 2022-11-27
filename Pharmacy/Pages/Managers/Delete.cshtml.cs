@@ -15,6 +15,10 @@ namespace PharmacyApp.Pages.Managers
         private readonly PharmacyApp.Data.PharmacyContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
 
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+
         public DeleteModel(PharmacyApp.Data.PharmacyContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
@@ -24,14 +28,20 @@ namespace PharmacyApp.Pages.Managers
         [BindProperty]
       public Manager Manager { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int? pageIndex, int? id)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             if (id == null || _context.Managers == null)
             {
                 return NotFound();
             }
 
-            var manager = await _context.Managers.FirstOrDefaultAsync(m => m.Id == id);
+            var manager = await _context.Managers
+                .Include(m => m.Pharmacy)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (manager == null)
             {
@@ -63,7 +73,8 @@ namespace PharmacyApp.Pages.Managers
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(string sortOrder,
+            string currentFilter, int? pageIndex, int? id)
         {
             if (id == null || _context.Managers == null)
             {
@@ -78,7 +89,12 @@ namespace PharmacyApp.Pages.Managers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new
+            {
+                pageIndex = $"{pageIndex}",
+                sortOrder = $"{sortOrder}",
+                currentFilter = $"{currentFilter}"
+            });
         }
     }
 }

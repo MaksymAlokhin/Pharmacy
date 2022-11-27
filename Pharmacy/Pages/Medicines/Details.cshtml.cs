@@ -14,6 +14,10 @@ namespace PharmacyApp.Pages.Medicines
     {
         private readonly PharmacyApp.Data.PharmacyContext _context;
 
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+
         public DetailsModel(PharmacyApp.Data.PharmacyContext context)
         {
             _context = context;
@@ -21,8 +25,12 @@ namespace PharmacyApp.Pages.Medicines
 
       public Medicine Medicine { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int? pageIndex, int? id)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             if (id == null || _context.Medicines == null)
             {
                 return NotFound();

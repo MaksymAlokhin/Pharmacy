@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PharmacyApp.Models
 {
@@ -6,6 +7,7 @@ namespace PharmacyApp.Models
     {
         public int Id { get; set; }
         [DisplayName("Назва аптеки")]
+        [Required]
         public string Name { get; set; }
         [DisplayName("Місто")]
         public string City { get; set; }

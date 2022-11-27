@@ -16,6 +16,10 @@ namespace PharmacyApp.Pages.Medicines
         private readonly PharmacyApp.Data.PharmacyContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
 
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+
         public DeleteModel(PharmacyApp.Data.PharmacyContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
@@ -25,8 +29,12 @@ namespace PharmacyApp.Pages.Medicines
         [BindProperty]
       public Medicine Medicine { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int? pageIndex, int? id)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             if (id == null || _context.Medicines == null)
             {
                 return NotFound();
@@ -45,7 +53,8 @@ namespace PharmacyApp.Pages.Medicines
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(string sortOrder,
+            string currentFilter, int? pageIndex, int? id)
         {
             if (id == null || _context.Medicines == null)
             {
@@ -78,7 +87,12 @@ namespace PharmacyApp.Pages.Medicines
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new
+            {
+                pageIndex = $"{pageIndex}",
+                sortOrder = $"{sortOrder}",
+                currentFilter = $"{currentFilter}"
+            });
         }
     }
 }

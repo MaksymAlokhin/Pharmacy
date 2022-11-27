@@ -17,6 +17,10 @@ namespace PharmacyApp.Pages.Medicines
         private readonly PharmacyApp.Data.PharmacyContext _context;
         private readonly IWebHostEnvironment webHostEnvironment;
 
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+
         public EditModel(PharmacyApp.Data.PharmacyContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
@@ -29,8 +33,12 @@ namespace PharmacyApp.Pages.Medicines
         private readonly string[] permittedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".tiff" };
 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int? pageIndex, int? id)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             if (id == null || _context.Medicines == null)
             {
                 return NotFound();
@@ -47,7 +55,8 @@ namespace PharmacyApp.Pages.Medicines
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string sortOrder,
+            string currentFilter, int? pageIndex)
         {
             if (!ModelState.IsValid)
             {
@@ -115,7 +124,12 @@ namespace PharmacyApp.Pages.Medicines
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new
+            {
+                pageIndex = $"{pageIndex}",
+                sortOrder = $"{sortOrder}",
+                currentFilter = $"{currentFilter}"
+            });
         }
 
         private bool MedicineExists(int id)

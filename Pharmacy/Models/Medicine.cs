@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PharmacyApp.Models
 {
@@ -6,6 +7,7 @@ namespace PharmacyApp.Models
     {
         public int Id { get; set; }
         [DisplayName("Найменування")]
+        [Required]
         public string Name { get; set; }
         [DisplayName("Ціна")]
         public decimal Price { get; set; }

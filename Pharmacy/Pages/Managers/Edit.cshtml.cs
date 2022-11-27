@@ -18,6 +18,10 @@ namespace PharmacyApp.Pages.Managers
         public IFormFile FormFile { get; set; }
         private readonly string[] permittedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".tiff" };
 
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+
         public EditModel(PharmacyApp.Data.PharmacyContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
@@ -29,8 +33,12 @@ namespace PharmacyApp.Pages.Managers
         [BindProperty]
         public Manager Manager { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int? pageIndex, int? id)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             var PharmaciesQuery = _context.Pharmacies
                 .OrderBy(e => e.Name)
                 .AsNoTracking();
@@ -57,7 +65,8 @@ namespace PharmacyApp.Pages.Managers
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int PharmacyId)
+        public async Task<IActionResult> OnPostAsync(string sortOrder,
+            string currentFilter, int? pageIndex, int PharmacyId)
         {
             if (!ModelState.IsValid)
             {
@@ -135,7 +144,12 @@ namespace PharmacyApp.Pages.Managers
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new
+            {
+                pageIndex = $"{pageIndex}",
+                sortOrder = $"{sortOrder}",
+                currentFilter = $"{currentFilter}"
+            });
         }
 
         private bool ManagerExists(int id)

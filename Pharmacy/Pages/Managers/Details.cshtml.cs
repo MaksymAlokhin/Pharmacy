@@ -14,6 +14,10 @@ namespace PharmacyApp.Pages.Managers
     {
         private readonly PharmacyApp.Data.PharmacyContext _context;
 
+        public int? PageIndex { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentSort { get; set; }
+
         public DetailsModel(PharmacyApp.Data.PharmacyContext context)
         {
             _context = context;
@@ -21,14 +25,21 @@ namespace PharmacyApp.Pages.Managers
 
       public Manager Manager { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string sortOrder, string currentFilter, int? pageIndex, int? id)
         {
+            PageIndex = pageIndex;
+            CurrentSort = sortOrder;
+            CurrentFilter = currentFilter;
+
             if (id == null || _context.Managers == null)
             {
                 return NotFound();
             }
 
-            var manager = await _context.Managers.FirstOrDefaultAsync(m => m.Id == id);
+            var manager = await _context.Managers
+                .Include(m => m.Pharmacy)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (manager == null)
             {
                 return NotFound();
