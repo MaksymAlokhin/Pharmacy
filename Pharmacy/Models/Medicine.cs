@@ -6,9 +6,11 @@ namespace PharmacyApp.Models
     public class Medicine
     {
         public int Id { get; set; }
+        [StringLength(50, ErrorMessage = "Довжина не повинна перевищуати 50 символів.")]
         [DisplayName("Найменування")]
         [Required]
         public string Name { get; set; }
+        [DataType(DataType.Currency)]
         [DisplayName("Ціна")]
         public decimal Price { get; set; }
         [DisplayName("Зображеня")]

@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PharmacyApp.Data;
+using System.Globalization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +14,16 @@ builder.Services.AddDbContext<PharmacyContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
+
+var locale = builder.Configuration["SiteLocale"];
+RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
+{
+    SupportedCultures = new List<CultureInfo> { new CultureInfo(locale) },
+    SupportedUICultures = new List<CultureInfo> { new CultureInfo(locale) },
+    DefaultRequestCulture = new RequestCulture(locale)
+};
+
+app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -30,7 +43,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var context = services.GetRequiredService<PharmacyContext>();
-    context.Database.EnsureCreated();
+    //context.Database.EnsureCreated();
+    context.Database.Migrate();
     DbInitializer.Initialize(context);
 }
 

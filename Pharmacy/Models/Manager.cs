@@ -6,11 +6,14 @@ namespace PharmacyApp.Models
     public class Manager
     {
         public int Id { get; set; }
+        [StringLength(50, ErrorMessage = "Довжина не повинна перевищуати 50 символів.")]
         [DisplayName("Ім'я")]
         public string FirstName { get; set; }
+        [StringLength(50, ErrorMessage = "Довжина не повинна перевищуати 50 символів.")]
         [DisplayName("Прізвище")]
         [Required]
         public string LastName { get; set; }
+        [StringLength(50, ErrorMessage = "Довжина не повинна перевищуати 50 символів.")]
         [DisplayName("По батькові")]
         public string Patronymic { get; set; }
         public string FullName => $"{LastName} {FirstName} {Patronymic}";
