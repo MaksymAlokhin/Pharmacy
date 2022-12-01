@@ -14,8 +14,8 @@ namespace PharmacyApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Price = table.Column<decimal>(type: "money", nullable: false),
                     BoxArt = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -29,8 +29,8 @@ namespace PharmacyApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,9 +43,9 @@ namespace PharmacyApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Patronymic = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Patronymic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PharmacyId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -66,8 +66,8 @@ namespace PharmacyApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    PharmacyId = table.Column<int>(type: "int", nullable: true),
-                    MedicineId = table.Column<int>(type: "int", nullable: true)
+                    PharmacyId = table.Column<int>(type: "int", nullable: false),
+                    MedicineId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,12 +76,14 @@ namespace PharmacyApp.Migrations
                         name: "FK_PharmacyMedicine_Medicine_MedicineId",
                         column: x => x.MedicineId,
                         principalTable: "Medicine",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PharmacyMedicine_Pharmacy_PharmacyId",
                         column: x => x.PharmacyId,
                         principalTable: "Pharmacy",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

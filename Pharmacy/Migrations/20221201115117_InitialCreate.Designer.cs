@@ -12,7 +12,7 @@ using PharmacyApp.Data;
 namespace PharmacyApp.Migrations
 {
     [DbContext(typeof(PharmacyContext))]
-    [Migration("20221129085158_InitialCreate")]
+    [Migration("20221201115117_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,14 +33,17 @@ namespace PharmacyApp.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Patronymic")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("PharmacyId")
                         .HasColumnType("int");
@@ -70,10 +73,11 @@ namespace PharmacyApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.HasKey("Id");
 
@@ -89,11 +93,13 @@ namespace PharmacyApp.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -108,10 +114,10 @@ namespace PharmacyApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("MedicineId")
+                    b.Property<int>("MedicineId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PharmacyId")
+                    b.Property<int>("PharmacyId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -139,11 +145,15 @@ namespace PharmacyApp.Migrations
                 {
                     b.HasOne("PharmacyApp.Models.Medicine", "Medicine")
                         .WithMany("PharmacyMedicine")
-                        .HasForeignKey("MedicineId");
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PharmacyApp.Models.Pharmacy", "Pharmacy")
                         .WithMany("PharmacyMedicine")
-                        .HasForeignKey("PharmacyId");
+                        .HasForeignKey("PharmacyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Medicine");
 

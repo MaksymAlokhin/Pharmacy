@@ -57,7 +57,7 @@ namespace PharmacyApp.Data
 
         public static Medicine med08 = new Medicine
         {
-            Name = "Вiтамiн С Ацерола капсули №10",
+            Name = "Вітамін С Ацерола капсули №10",
             Price = 42.60M,
             BoxArt = "med08.jpg"
         };

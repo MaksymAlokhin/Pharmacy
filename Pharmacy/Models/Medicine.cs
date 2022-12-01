@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PharmacyApp.Models
 {
@@ -11,6 +13,7 @@ namespace PharmacyApp.Models
         [Required]
         public string Name { get; set; }
         [DataType(DataType.Currency)]
+        [Column(TypeName = "money")]
         [DisplayName("Ціна")]
         public decimal Price { get; set; }
         [DisplayName("Зображеня")]

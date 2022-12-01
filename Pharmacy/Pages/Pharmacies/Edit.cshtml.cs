@@ -60,17 +60,20 @@ namespace PharmacyApp.Pages.Pharmacies
                 .AsNoTracking();
             MedicinesSelectList = new SelectList(MedicinesQuery, "Id", "Name"); //list, id, value
 
+            SelectedMedicines = new List<int>();
+            foreach (var pharmacyMedicine in Pharmacy.PharmacyMedicine)
+            {
+                if (pharmacyMedicine.PharmacyId == Pharmacy.Id)
+                {
+                    SelectedMedicines.Add(pharmacyMedicine.MedicineId);
+                }
+            }
+
             var ManagersQuery = _context.Managers
                 .OrderBy(e => e.LastName)
                 .AsNoTracking();
 
             ManagersSelectList = new SelectList(ManagersQuery, "Id", "FullName"); //list, id, value
-
-            SelectedMedicines = new List<int>();
-            foreach (var pharmacyMedicine in Pharmacy.PharmacyMedicine)
-            {
-                SelectedMedicines.Add(pharmacyMedicine.Medicine.Id);
-            }
 
             return Page();
         }
@@ -142,21 +145,36 @@ namespace PharmacyApp.Pages.Pharmacies
         {
             //if (SelectedMedicines == null || SelectedMedicines.Length == 0)
             //{
-            //    Pharmacy.Branches = new List<Branch>();
+            //    //foreach (var pharmacyMedicine in Pharmacy.PharmacyMedicine)
+            //    //{
+            //    //    if (pharmacyMedicine.PharmacyId == Pharmacy.Id)
+            //    //    {
+            //    //        _context.PharmacyMedicine.Remove(pharmacyMedicine);
+            //    //    }
+            //    //}
+            //    Pharmacy.PharmacyMedicine = new List<PharmacyMedicine>();
             //    return;
             //}
 
-            //var SelectedBranchesHS = new HashSet<int>(SelectedMedicines);
-            //var CompanyBranchesHS = new HashSet<int>
-            //    (Pharmacy.Branches.Select(s => s.Id));
-            //foreach (var branch in _context.Branches)
+            //var SelectedMedicinesHS = new HashSet<int>(SelectedMedicines);
+            //var PharmacyMedicinesHS = new HashSet<int>();
+            //foreach (var pharmacyMedicine in Pharmacy.PharmacyMedicine)
+            //{
+            //    if (pharmacyMedicine.PharmacyId == Pharmacy.Id)
+            //    {
+            //        PharmacyMedicinesHS.Add(pharmacyMedicine.MedicineId);
+            //    }
+            //}
+
+            //foreach (var medicine in _context.Medicines)
             //{
             //    //If items are selected
-            //    if (SelectedBranchesHS.Contains(branch.Id))
+            //    if (SelectedMedicinesHS.Contains(medicine.Id))
             //    {
             //        //If item not present
-            //        if (!CompanyBranchesHS.Contains(branch.Id))
+            //        if (!PharmacyMedicinesHS.Contains(medicine.Id))
             //        {
+
             //            Pharmacy.Branches.Add(branch);
             //            if (!CompaniesWithModifiedState.Contains(Pharmacy.Id))
             //                CompaniesWithModifiedState.Add(Pharmacy.Id);
@@ -166,7 +184,7 @@ namespace PharmacyApp.Pages.Pharmacies
             //    else
             //    {
             //        //If item is present
-            //        if (CompanyBranchesHS.Contains(branch.Id))
+            //        if (PharmacyMedicinesHS.Contains(branch.Id))
             //        {
             //            var toRemove = Pharmacy.Branches.Single(s => s.Id == branch.Id);
             //            Pharmacy.Branches.Remove(toRemove);
