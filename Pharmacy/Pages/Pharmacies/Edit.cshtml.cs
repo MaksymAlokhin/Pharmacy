@@ -20,8 +20,6 @@ namespace PharmacyApp.Pages.Pharmacies
         public string CurrentFilter { get; set; }
         public string CurrentSort { get; set; }
 
-        public List<int> SelectedMedicines { get; set; }
-        public SelectList MedicinesSelectList { get; set; }
         public SelectList ManagersSelectList { get; set; }
 
         public EditModel(PharmacyApp.Data.PharmacyContext context)
@@ -54,20 +52,6 @@ namespace PharmacyApp.Pages.Pharmacies
                 return NotFound();
             }
             Pharmacy = pharmacy;
-
-            var MedicinesQuery = _context.Medicines
-                .OrderBy(m => m.Name)
-                .AsNoTracking();
-            MedicinesSelectList = new SelectList(MedicinesQuery, "Id", "Name"); //list, id, value
-
-            SelectedMedicines = new List<int>();
-            foreach (var pharmacyMedicine in Pharmacy.PharmacyMedicine)
-            {
-                if (pharmacyMedicine.PharmacyId == Pharmacy.Id)
-                {
-                    SelectedMedicines.Add(pharmacyMedicine.MedicineId);
-                }
-            }
 
             var ManagersQuery = _context.Managers
                 .OrderBy(e => e.LastName)
@@ -108,8 +92,6 @@ namespace PharmacyApp.Pages.Pharmacies
                 _context.Attach(pharmacyWithSameManager).State = EntityState.Modified;
             }
 
-            UpdateMedicines(SelectedMedicines, Pharmacy);
-
             _context.Attach(Pharmacy).State = EntityState.Modified;
 
             try
@@ -140,58 +122,5 @@ namespace PharmacyApp.Pages.Pharmacies
         {
             return _context.Pharmacies.Any(e => e.Id == id);
         }
-
-        private void UpdateMedicines(int[] SelectedMedicines, Pharmacy Pharmacy)
-        {
-            //if (SelectedMedicines == null || SelectedMedicines.Length == 0)
-            //{
-            //    //foreach (var pharmacyMedicine in Pharmacy.PharmacyMedicine)
-            //    //{
-            //    //    if (pharmacyMedicine.PharmacyId == Pharmacy.Id)
-            //    //    {
-            //    //        _context.PharmacyMedicine.Remove(pharmacyMedicine);
-            //    //    }
-            //    //}
-            //    Pharmacy.PharmacyMedicine = new List<PharmacyMedicine>();
-            //    return;
-            //}
-
-            //var SelectedMedicinesHS = new HashSet<int>(SelectedMedicines);
-            //var PharmacyMedicinesHS = new HashSet<int>();
-            //foreach (var pharmacyMedicine in Pharmacy.PharmacyMedicine)
-            //{
-            //    if (pharmacyMedicine.PharmacyId == Pharmacy.Id)
-            //    {
-            //        PharmacyMedicinesHS.Add(pharmacyMedicine.MedicineId);
-            //    }
-            //}
-
-            //foreach (var medicine in _context.Medicines)
-            //{
-            //    //If items are selected
-            //    if (SelectedMedicinesHS.Contains(medicine.Id))
-            //    {
-            //        //If item not present
-            //        if (!PharmacyMedicinesHS.Contains(medicine.Id))
-            //        {
-
-            //            Pharmacy.Branches.Add(branch);
-            //            if (!CompaniesWithModifiedState.Contains(Pharmacy.Id))
-            //                CompaniesWithModifiedState.Add(Pharmacy.Id);
-            //        }
-            //    }
-            //    //If items are not selected
-            //    else
-            //    {
-            //        //If item is present
-            //        if (PharmacyMedicinesHS.Contains(branch.Id))
-            //        {
-            //            var toRemove = Pharmacy.Branches.Single(s => s.Id == branch.Id);
-            //            Pharmacy.Branches.Remove(toRemove);
-            //        }
-            //    }
-            //}
-        }
-
     }
 }
