@@ -15,7 +15,7 @@
                     <a asp-page="Create" asp-route-sortOrder="@Model.CurrentSort"
                        asp-route-pageIndex="@Model.PharmacyMedicine.PageIndex"
                        asp-route-currentFilter="@Model.CurrentFilter" 
-                       asp-route-Role="@Model.SelectedPharmacyId" title="Створити">
+                       asp-route-SelectedPharmacyId="@Model.SelectedPharmacyId" title="Створити">
                        <i class="fas fa-plus-circle fa-lg mr-1"></i></a>
                 </div>
                 <input type="text" name="SearchString" value="@Model.CurrentFilter" placeholder="Пошук" />
@@ -38,29 +38,32 @@
 <table class="table">
     <thead>
         <tr>
-            <th>#</th>
-            <th>
+            <th class="availability-col-1">#</th>
+            <th class="availability-col-2">
                 <a asp-page="./Index"
                    asp-route-sortOrder="@Model.MedicineSort"
-                   asp-route-currentFilter="@Model.CurrentFilter">
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-SelectedPharmacyId="@Model.SelectedPharmacyId">
                     @Html.DisplayNameFor(model => model.PharmacyMedicine[0].Medicine)
                 </a>
             </th>
-            <th>
+            <th class="availability-col-3">
                 <a asp-page="./Index"
                    asp-route-sortOrder="@Model.QuantitySort"
-                   asp-route-currentFilter="@Model.CurrentFilter">
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-SelectedPharmacyId="@Model.SelectedPharmacyId">
                     @Html.DisplayNameFor(model => model.PharmacyMedicine[0].Quantity)
                 </a>
             </th>
-            <th>
+            <th class="availability-col-4">
                 <a asp-page="./Index"
                    asp-route-sortOrder="@Model.PharmacySort"
-                   asp-route-currentFilter="@Model.CurrentFilter">
+                   asp-route-currentFilter="@Model.CurrentFilter"
+                   asp-route-RoSelectedPharmacyIdle="@Model.SelectedPharmacyId">
                     @Html.DisplayNameFor(model => model.PharmacyMedicine[0].Pharmacy)
                 </a>
             </th>
-            <th></th>
+            <th class="availability-col-5"></th>
         </tr>
     </thead>
     <tbody>
@@ -118,6 +121,7 @@
    asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="1"
    asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-SelectedPharmacyId="@Model.SelectedPharmacyId"
    class="btn btn-primary @prevDisabled">
     <i class="fas fa-fast-backward"></i>
 </a>
@@ -125,6 +129,7 @@
    asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.PharmacyMedicine.PageIndex - 1)"
    asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-SelectedPharmacyId="@Model.SelectedPharmacyId"
    class="btn btn-primary @prevDisabled">
     <i class="fas fa-arrow-alt-circle-left fa-lg"></i>
 </a>
@@ -132,6 +137,7 @@
    asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.PharmacyMedicine.PageIndex + 1)"
    asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-SelectedPharmacyId="@Model.SelectedPharmacyId"
    class="btn btn-primary @nextDisabled">
     <i class="fas fa-arrow-alt-circle-right fa-lg"></i>
 </a>
@@ -139,6 +145,7 @@
    asp-route-sortOrder="@Model.CurrentSort"
    asp-route-pageIndex="@(Model.PharmacyMedicine.TotalPages)"
    asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-SelectedPharmacyId="@Model.SelectedPharmacyId"
    class="btn btn-primary @nextDisabled">
     <i class="fas fa-fast-forward"></i>
 </a>

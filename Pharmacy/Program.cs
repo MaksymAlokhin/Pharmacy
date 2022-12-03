@@ -2,14 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PharmacyApp.Data;
+using System.Configuration;
+using System;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<PharmacyContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PharmacyContext") ?? throw new InvalidOperationException("Connection string 'PharmacyContext' not found.")));
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<PharmacyContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("PharmacyContext"))); //"DefaultConnection", "AzureSQLConnection"
+}
+else if (builder.Environment.IsProduction())
+{
+    builder.Services.AddDbContext<PharmacyContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("AzureSQLConnection")));
+}
+//builder.Services.AddDbContext<PharmacyContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("PharmacyContext") ?? throw new InvalidOperationException("Connection string 'PharmacyContext' not found.")));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

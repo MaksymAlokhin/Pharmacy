@@ -35,11 +35,12 @@ namespace PharmacyApp.Pages.PharmacyMedicines
         public async Task OnGetAsync(string sortOrder,
             string currentFilter, string searchString, int? pageIndex, int SelectedPharmacyId)
         {
+            this.SelectedPharmacyId = SelectedPharmacyId;
             var PharmaciesQuery = _context.Pharmacies
                 .OrderBy(e => e.Name)
                 .AsNoTracking();
 
-            PharmaciesSelectList = new SelectList(PharmaciesQuery, "Id", "Name"); //list, id, value
+            PharmaciesSelectList = new SelectList(PharmaciesQuery, "Id", "Name", SelectedPharmacyId); //list, id, value
 
             CurrentSort = sortOrder;
             MedicineSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";

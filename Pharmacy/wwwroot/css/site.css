@@ -85,6 +85,27 @@ body {
     width: 12.9%;
 }
 
+
+.availability-col-1 {
+    width: 5%;
+}
+
+.availability-col-2 {
+    width: 46%;
+}
+
+.availability-col-3 {
+    width: 6%;
+}
+
+.availability-col-4 {
+    width: 31%;
+}
+
+.availability-col-5 {
+    width: 12%;
+}
+
 .table td {
     word-break: break-all;
 }
