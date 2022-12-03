@@ -23,7 +23,7 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: ERPSystem
+      working-directory: Pharmacy
     - name: Build
       run: dotnet build --no-restore
       working-directory: Pharmacy
@@ -33,5 +33,5 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.ERP_SYSTEM_DEMO_WEBAPP_SECRET }}
+        publish-profile: ${{ secrets.PHARMACY_SECRET }}
         package: '${{ env.WORKING_DIRECTORY }}/website'
