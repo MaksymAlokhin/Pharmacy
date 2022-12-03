@@ -23,7 +23,7 @@ else if (builder.Environment.IsProduction())
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("AzureSQLConnection")));
 }
-//builder.Services.AddDbContext<PharmacyContext>(options =>
+//builder.Services.AddDbContext<PharmacyContext>(options  =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("PharmacyContext") ?? throw new InvalidOperationException("Connection string 'PharmacyContext' not found.")));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
