@@ -1,4 +1,5 @@
 ﻿using PharmacyApp.Models;
+using System.Collections.Generic;
 using static PharmacyApp.Data.SeedManagers;
 
 namespace PharmacyApp.Data

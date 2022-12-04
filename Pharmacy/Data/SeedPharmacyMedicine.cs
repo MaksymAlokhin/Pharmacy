@@ -1,6 +1,7 @@
 ﻿using PharmacyApp.Models;
 using static PharmacyApp.Data.SeedPharmacies;
 using static PharmacyApp.Data.SeedMedicines;
+using System.Collections.Generic;
 
 namespace PharmacyApp.Data
 {

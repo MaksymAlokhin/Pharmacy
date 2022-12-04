@@ -1,4 +1,6 @@
-﻿namespace PharmacyApp.Data
+﻿using System.Linq;
+
+namespace PharmacyApp.Data
 {
     public static class DbInitializer
     {

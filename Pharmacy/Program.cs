@@ -5,71 +5,40 @@ using PharmacyApp.Data;
 using System.Configuration;
 using System;
 using System.Globalization;
+using Microsoft.AspNetCore.Builder;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Hosting;
+using PharmacyApp;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddRazorPages();
-
-if (builder.Environment.IsDevelopment())
+internal class Program
 {
-    builder.Services.AddDbContext<PharmacyContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("PharmacyContext"))); //"DefaultConnection", "AzureSQLConnection"
+    public static void Main(string[] args)
+    {
+        var host = CreateHostBuilder(args).Build();
+
+        using (var scope = host.Services.CreateScope())
+        {
+            IServiceProvider services = scope.ServiceProvider;
+
+            var context = services.GetRequiredService<PharmacyContext>();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+
+            context.Database.Migrate();
+
+            DbInitializer.Initialize(context);
+        }
+
+        host.Run();
+    }
+
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
 }
-else if (builder.Environment.IsProduction())
-{
-    builder.Services.AddDbContext<PharmacyContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("AzureSQLConnection")));
-}
-//builder.Services.AddDbContext<PharmacyContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("PharmacyContext") ?? throw new InvalidOperationException("Connection string 'PharmacyContext' not found.")));
-
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-var app = builder.Build();
-
-var locale = builder.Configuration["SiteLocale"];
-RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
-{
-    SupportedCultures = new List<CultureInfo> { new CultureInfo(locale) },
-    SupportedUICultures = new List<CultureInfo> { new CultureInfo(locale) },
-    DefaultRequestCulture = new RequestCulture(locale)
-};
-
-app.UseRequestLocalization(localizationOptions);
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-else
-{
-    app.UseDeveloperExceptionPage();
-    app.UseMigrationsEndPoint();
-}
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    var context = services.GetRequiredService<PharmacyContext>();
-    //context.Database.EnsureCreated();
-    context.Database.Migrate();
-    DbInitializer.Initialize(context);
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.Run();
