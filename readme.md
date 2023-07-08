@@ -1,4 +1,4 @@
-[![.NET](https://github.com/https://github.com/MaksymAlokhin/Pharmacy/actions/workflows/dotnet.yml/badge.svg)](https://github.com/https://github.com/MaksymAlokhin/Pharmacy/actions/workflows/dotnet.yml)
+[![.NET](https://github.com/MaksymAlokhin/Pharmacy/actions/workflows/dotnet.yml/badge.svg)](https://github.com/MaksymAlokhin/Pharmacy/actions/workflows/dotnet.yml)
 Pharmacy Management System<br />
 ========================
 Features:<br />
@@ -11,7 +11,7 @@ Features:<br />
 Installation:<br />
 ---------------
 Everything should work out of the box<br />
-Все повинно працювати без додаткових налаштувань.<br />
+Р’СЃРµ РїРѕРІРёРЅРЅРѕ РїСЂР°С†СЋРІР°С‚Рё Р±РµР· РґРѕРґР°С‚РєРѕРІРёС… РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ.<br />
 
 Built With:<br />
 --------------------
@@ -20,12 +20,12 @@ Built With:<br />
 - Razor Pages
 - SQL Server
 
-Система управління аптеками:<br />
+РЎРёСЃС‚РµРјР° СѓРїСЂР°РІР»С–РЅРЅСЏ Р°РїС‚РµРєР°РјРё:<br />
 ---------------------------------
-- Управління аптеками
-- Управління ліками
-- Управління персоналом
-- Управління наявністю ліків
+- РЈРїСЂР°РІР»С–РЅРЅСЏ Р°РїС‚РµРєР°РјРё
+- РЈРїСЂР°РІР»С–РЅРЅСЏ Р»С–РєР°РјРё
+- РЈРїСЂР°РІР»С–РЅРЅСЏ РїРµСЂСЃРѕРЅР°Р»РѕРј
+- РЈРїСЂР°РІР»С–РЅРЅСЏ РЅР°СЏРІРЅС–СЃС‚СЋ Р»С–РєС–РІ
 
 
 ![curriculum](Screenshots/pharmacy-list.png)<br /><br />
